@@ -1,0 +1,2 @@
+#reset table
+docker exec
