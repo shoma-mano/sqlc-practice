@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BufFileManager">
+    <libraries>
+      <module>
+        <name>buf.build/googleapis/googleapis</name>
+        <path>$USER_HOME$/.cache/buf/v1/module/data/buf.build/googleapis/googleapis/84c3cad756d2435982d9e3b72680fa96</path>
+        <reference>buf.build/googleapis/googleapis:84c3cad756d2435982d9e3b72680fa96</reference>
+        <yaml>$USER_HOME$/.cache/buf/v1/module/data/buf.build/googleapis/googleapis/84c3cad756d2435982d9e3b72680fa96/buf.yaml</yaml>
+      </module>
+    </libraries>
+    <modules>
+      <module>
+        <name>buf.build/shoma/tweet</name>
+        <path>$PROJECT_DIR$/proto</path>
+        <yaml>$PROJECT_DIR$/proto/buf.yaml</yaml>
+      </module>
+    </modules>
+    <workspaces>
+      <workspace>
+        <path>$PROJECT_DIR$</path>
+        <roots>
+          <root value="$PROJECT_DIR$/proto" />
+        </roots>
+        <yaml>$PROJECT_DIR$/buf.work.yaml</yaml>
+      </workspace>
+    </workspaces>
+  </component>
+</project>

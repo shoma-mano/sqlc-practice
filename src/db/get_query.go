@@ -2,13 +2,23 @@ package db
 
 import (
 	"database/sql"
-	"github.com/shoma-mano/go-sqlc/sqlc"
+	"fmt"
+	"github.com/shoma-mano/go-sqlc/gen/sqlc"
+	"os"
 )
 
 var DB sqlc.DBTX
 
 func InitDB() error {
-	db, err := sql.Open("mysql", "root:root@(127.0.0.1:3309)/test")
+	addr := os.Getenv("DB_ADDR")
+	if addr == "" {
+		addr = "127.0.0.1"
+	}
+	port := os.Getenv("DB_PORT")
+	if port == "" {
+		port = "3309"
+	}
+	db, err := sql.Open("mysql", fmt.Sprintf("root:root@(%s:%s)/test", addr, port))
 	if err != nil {
 		return err
 	}

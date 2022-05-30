@@ -4,9 +4,14 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"github.com/shoma-mano/go-sqlc/sqlc"
+	"github.com/shoma-mano/go-sqlc/gen/pb"
+	"github.com/shoma-mano/go-sqlc/gen/sqlc"
 	"github.com/shoma-mano/go-sqlc/src/db"
+	"github.com/shoma-mano/go-sqlc/src/service"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 	"log"
+	"net"
 	"reflect"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -14,13 +19,6 @@ import (
 
 func run() error {
 	ctx := context.Background()
-
-	//db, err := sql.Open("mysql", "root:root@(127.0.0.1:3309)/test")
-	//if err != nil {
-	//	return err
-	//}
-	//
-	//queries := tutorial.New(db)
 
 	err := db.InitDB()
 	if err != nil {
@@ -33,14 +31,14 @@ func run() error {
 	}
 
 	// list all authors
-	authors, err := queries.ListAuthors(ctx)
+	authors, err := queries.ListAccounts(ctx)
 	if err != nil {
 		return err
 	}
 	log.Println(authors)
 
 	// create an author
-	result, err := queries.CreateAuthor(ctx, sqlc.CreateAuthorParams{
+	result, err := queries.CreateAccount(ctx, sqlc.CreateAccountParams{
 		Name: "Brian Kernighan",
 		Bio:  sql.NullString{String: "Co-author of The C Programming Language and The Go Programming Language", Valid: true},
 		Uid:  "test",
@@ -49,25 +47,36 @@ func run() error {
 		return err
 	}
 
-	insertedAuthorID, err := result.LastInsertId()
+	insertedAccountID, err := result.LastInsertId()
 	if err != nil {
 		return err
 	}
-	log.Println(insertedAuthorID)
+	log.Println(insertedAccountID)
 
 	// get the author we just inserted
-	fetchedAuthor, err := queries.GetAuthor(ctx, insertedAuthorID)
+	fetchedAccount, err := queries.GetAccount(ctx, "0")
 	if err != nil {
 		return err
 	}
 
 	// prints true
-	log.Println(reflect.DeepEqual(insertedAuthorID, fetchedAuthor.ID))
+	log.Println(reflect.DeepEqual(insertedAccountID, fetchedAccount.ID))
 	return nil
 }
 
 func main() {
+	port := 50051
+	listenPort, err := net.Listen("tcp", fmt.Sprintf(":%d", port))
+	if err != nil {
+		log.Fatalf("failed to listen: %v", err)
+	}
+	server := grpc.NewServer()
+	pb.RegisterAccountServiceServer(server, service.ReturnAccountService())
+
 	if err := run(); err != nil {
 		log.Fatal(err)
 	}
+
+	reflection.Register(server)
+	server.Serve(listenPort)
 }

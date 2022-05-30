@@ -1,0 +1,7 @@
+.idea
+buf.gen.yaml
+buf.work.yaml
+compose.yml
+README.md
+setup.sh
+sqlc.yaml

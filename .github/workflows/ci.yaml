@@ -1,0 +1,21 @@
+name: learn-github-actions
+on: [push]
+jobs:
+  jest:
+    runs-on: ubuntu-latest
+    env: 
+     DATABASE_URL: mysql://root:root@127.0.0.1:3306/test
+    services:
+#          mysql:
+#            image: mysql:8
+#            ports:
+#              - 3306:3306
+#            env:
+#              MYSQL_DATABASE: test
+#              MYSQL_ROOT_USER: root
+#              MYSQL_ROOT_PASSWORD: root
+#            options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+          go:
+            image: ghcr.io/shoma-mano/go_tweet:latest
+    steps:
+      - uses: actions/checkout@v3

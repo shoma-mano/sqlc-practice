@@ -16,9 +16,9 @@ type Account struct {
 }
 
 type Category struct {
-	ID        int64
-	AccountID int64
-	Content   sql.NullString
+	ID      int64
+	TweetID int64
+	Content sql.NullString
 }
 
 type Tweet struct {

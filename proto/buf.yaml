@@ -1,0 +1,8 @@
+version: v1
+name: buf.build/shoma/tweet
+breaking:
+  use:
+    - FILE
+lint:
+  use:
+    - DEFAULT

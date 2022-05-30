@@ -1,0 +1,1 @@
+INSERT IGNORE INTO categories VALUE (null,1,"test");

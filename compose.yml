@@ -1,6 +1,7 @@
 services:
   db:
     image: mysql:8.0
+    container_name: tweet_driven_db
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: test
@@ -13,6 +14,13 @@ services:
       - db-store:/var/lib/mysql
     ports:
       - 3309:3309
+  go:
+    image: go_image
+    build: .
+    environment:
+      DB_ADDR: tweet_driven_db
+    restart: always
+
 
 volumes:
   db-store:

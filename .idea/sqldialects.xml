@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
-    <file url="file://$PROJECT_DIR$/sql/query.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/sql/reset.sql" dialect="MySQL" />
-    <file url="file://$PROJECT_DIR$/sql/schema.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/sql/seed.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/sql/sqlc/query.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/sql/sqlc/schema.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/sql/test.sql" dialect="MySQL" />
   </component>
 </project>
