@@ -20,7 +20,7 @@ services:
     environment:
       DB_ADDR: tweet_driven_db
     restart: always
-
-
+    ports:
+      - 50051:50051
 volumes:
   db-store:

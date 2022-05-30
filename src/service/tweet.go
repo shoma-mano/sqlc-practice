@@ -23,7 +23,7 @@ func (a TweetService) CreateTweet(ctx context.Context, input *pb.CreateTweetInpu
 		Content:   sql.NullString{},
 	})
 	affectedRows, _ := ac.RowsAffected()
-	return &pb.AffectedRows{AffectedRows: affectedRows}, nil
+	return &pb.AffectedRows{AffectedRows: uint64(affectedRows)}, nil
 }
 
 //func (a TweetService) FindOneByUID(ctx context.Context, uid *pb.UID) (*pb.Tweet, error) {

@@ -27,7 +27,7 @@ func (a AccountService) CreateAccount(ctx context.Context, input *pb.CreateAccou
 		Uid: input.UID,
 	})
 	affectedRows, _ := ac.RowsAffected()
-	return &pb.AffectedRows{AffectedRows: affectedRows}, nil
+	return &pb.AffectedRows{AffectedRows: uint64(affectedRows)}, nil
 }
 
 func (a AccountService) FindOneByUID(ctx context.Context, uid *pb.UID) (*pb.Account, error) {

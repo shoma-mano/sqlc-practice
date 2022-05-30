@@ -5,7 +5,7 @@ option go_package = "pb/";
 package common;
 
 message AffectedRows {
-  int64 AffectedRows = 1;
+  uint64 AffectedRows = 1;
 }
 
 message Empty{}
