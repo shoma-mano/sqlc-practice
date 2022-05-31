@@ -10,6 +10,20 @@ import (
 	"database/sql"
 )
 
+const addCategoryToTweet = `-- name: AddCategoryToTweet :execresult
+INSERT IGNORE INTO tweets_categories (tweet_id, category_id)
+VALUES (?, (select id from categories where content = ?))
+`
+
+type AddCategoryToTweetParams struct {
+	TweetID int64
+	Content sql.NullString
+}
+
+func (q *Queries) AddCategoryToTweet(ctx context.Context, arg AddCategoryToTweetParams) (sql.Result, error) {
+	return q.db.ExecContext(ctx, addCategoryToTweet, arg.TweetID, arg.Content)
+}
+
 const createAccount = `-- name: CreateAccount :execresult
 INSERT INTO accounts (name, bio, uid)
 VALUES (?, ?, ?)
@@ -26,17 +40,12 @@ func (q *Queries) CreateAccount(ctx context.Context, arg CreateAccountParams) (s
 }
 
 const createCategory = `-- name: CreateCategory :execresult
-INSERT IGNORE INTO categories (tweet_id, content)
-VALUES (?, ?)
+INSERT IGNORE INTO categories (content)
+VALUES (?)
 `
 
-type CreateCategoryParams struct {
-	TweetID int64
-	Content sql.NullString
-}
-
-func (q *Queries) CreateCategory(ctx context.Context, arg CreateCategoryParams) (sql.Result, error) {
-	return q.db.ExecContext(ctx, createCategory, arg.TweetID, arg.Content)
+func (q *Queries) CreateCategory(ctx context.Context, content sql.NullString) (sql.Result, error) {
+	return q.db.ExecContext(ctx, createCategory, content)
 }
 
 const createTweet = `-- name: CreateTweet :execresult

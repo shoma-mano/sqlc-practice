@@ -19,9 +19,34 @@ func (a TweetService) CreateTweet(ctx context.Context, input *pb.CreateTweetInpu
 	}
 	fmt.Println(input)
 	ac, err := query.CreateTweet(ctx, sqlc.CreateTweetParams{
-		AccountID: 1,
-		Content:   sql.NullString{},
+		AccountID: input.AccountID,
+		Content: sql.NullString{
+			String: input.Content,
+			Valid:  true,
+		},
 	})
+	tweetId, _ := ac.LastInsertId()
+	for _, category := range input.Categories {
+		fmt.Println(category.Name)
+		_, err := query.CreateCategory(ctx, sql.NullString{
+			String: category.Name,
+			Valid:  true,
+		})
+		if err != nil {
+			println(err)
+		}
+		_, err = query.AddCategoryToTweet(ctx, sqlc.AddCategoryToTweetParams{
+			TweetID: tweetId,
+			Content: sql.NullString{
+				String: category.Name,
+				Valid:  true,
+			},
+		})
+		if err != nil {
+			println(err)
+		}
+	}
+
 	affectedRows, _ := ac.RowsAffected()
 	return &pb.AffectedRows{AffectedRows: uint64(affectedRows)}, nil
 }

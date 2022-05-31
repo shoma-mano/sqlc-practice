@@ -17,8 +17,16 @@ CREATE TABLE if not exists tweets
 CREATE TABLE if not exists categories
 (
     id         BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    tweet_id BIGINT NOT NULL,
     content    varchar(200) ,
-    CONSTRAINT FK_categories_accounts FOREIGN KEY (tweet_id) references tweets (id),
     UNIQUE (content)
+);
+
+CREATE TABLE if not exists tweets_categories
+(
+    id         BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    tweet_id   BIGINT NOT NULL,
+    category_id BIGINT NOT NULL,
+    FOREIGN KEY (tweet_id) references tweets (id),
+    FOREIGN KEY (category_id) references categories (id),
+    UNIQUE (tweet_id,category_id)
 );

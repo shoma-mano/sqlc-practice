@@ -11,6 +11,7 @@ begin
 end #
 delimiter ;
 call load_accounts_data();
-INSERT INTO test.tweets (account_id, content) VALUES (1, 'test
+INSERT INTO test.tweets (account_id, content) VALUES (1, 'eldenring is fun!
       ');
-INSERT INTO test.categories (tweet_id, content) VALUES (1, 'test');
+INSERT INTO test.categories (tweet_id, content) VALUES (1, 'game');
+INSERT INTO test.categories (tweet_id, content) VALUES (1, 'eldenring');

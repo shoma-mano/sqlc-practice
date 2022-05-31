@@ -19,11 +19,16 @@ FROM accounts
 WHERE id = ?;
 
 -- name: CreateCategory :execresult
-INSERT IGNORE INTO categories (tweet_id, content)
-VALUES (?, ?)
+INSERT IGNORE INTO categories (content)
+VALUES (?)
 ;
 
 -- name: CreateTweet :execresult
 INSERT IGNORE INTO tweets (account_id, content)
 VALUES (?, ?)
+;
+
+-- name: AddCategoryToTweet :execresult
+INSERT IGNORE INTO tweets_categories (tweet_id, category_id)
+VALUES (?, (select id from categories where content = ?))
 ;

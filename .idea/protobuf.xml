@@ -26,4 +26,7 @@
       </workspace>
     </workspaces>
   </component>
+  <component name="BufSettings">
+    <option name="path" value="/opt/homebrew/Cellar/buf/1.4.0/bin/buf" />
+  </component>
 </project>
